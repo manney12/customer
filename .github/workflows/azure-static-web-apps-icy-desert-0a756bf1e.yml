@@ -13,7 +13,7 @@ jobs:
   build_and_deploy:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Angular App
+    name: Build and Deploy Angular Frontend
 
     steps:
       - name: Checkout code
@@ -41,4 +41,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "CRUD-frontend-Spring"
+          api_location: ""  # Spring Boot is deployed separately
           output_location: "CRUD-frontend-Spring/dist/crud-frontend-spring"
