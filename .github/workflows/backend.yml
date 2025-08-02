@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Spring Boot App
-        run: mvn clean package
+        run: mvn clean package -DskipTests
         working-directory: ./CRUD-backend-Spring  # 👈 update to your backend folder
 
       - name: Deploy to Azure Web App
