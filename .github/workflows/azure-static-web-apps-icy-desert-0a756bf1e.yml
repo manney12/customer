@@ -42,4 +42,6 @@ jobs:
           action: "upload"
           app_location: "CRUD-frontend-Spring"
           api_location: ""  # Spring Boot is deployed separately
-          output_location: "CRUD-frontend-Spring/dist/crud-frontend-spring"
+         output_location: "CRUD-frontend-Spring/dist/crud-client-creation"
+
+
