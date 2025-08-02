@@ -1,5 +1,8 @@
+# This GitHub Actions workflow builds and deploys an Angular app to Azure Static Web Apps.
+
 name: Azure Static Web Apps CI/CD
 
+# Trigger this workflow when pushing or opening pull requests to this specific branch
 on:
   push:
     branches:
@@ -11,37 +14,47 @@ on:
 
 jobs:
   build_and_deploy:
+    # Run only on pushes or pull requests (not when PR is closed)
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Angular Frontend
 
     steps:
+      # Step 1: Checkout the code from the GitHub repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js environment (you can use node 16 or 18 depending on your Angular version)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Step 3: Install dependencies using npm
       - name: Install dependencies
         run: |
           cd CRUD-frontend-Spring
           npm install
 
+      # Step 4: Build the Angular app for production
       - name: Build Angular app
         run: |
           cd CRUD-frontend-Spring
           npm run build
 
+      # Step 5: Deploy the built app to Azure Static Web Apps
       - name: Deploy to Azure Static Web App
         uses: Azure/static-web-apps-deploy@v1
         with:
+          # Secret from GitHub containing the Azure deployment token
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_DESERT_0A756BF1E }}
+          # Token provided by GitHub for making repo-related API calls
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          # The main action to perform (upload the build output)
           action: "upload"
+          # Directory where your Angular app (with package.json) is located
           app_location: "CRUD-frontend-Spring"
-          api_location: ""  # Spring Boot is deployed separately
-         output_location: "CRUD-frontend-Spring/dist/crud-client-creation"
-
-
+          # Final folder containing built static files (after npm run build)
+          output_location: "CRUD-frontend-Spring/dist/crud-client-creation"
+          # Not needed for Spring Boot backend — leave blank
+          api_location: ""
