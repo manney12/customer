@@ -3,7 +3,7 @@ name: Build and Deploy Spring Boot to Azure
 on:
   push:
     branches:
-      - feature/CustomerAppFirstCommit  # replace if needed
+      - feature/CustomerAppFirstCommit
 
 jobs:
   build-and-deploy:
@@ -19,9 +19,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Spring Boot app with Maven (skip tests)
-        run: mvn clean package -DskipTests
-        working-directory: ./CRUD-backend-Spring
+      - name: Build Spring Boot JAR with Maven
+        run: mvn clean package -DskipTests -f CRUD-backend-Spring/pom.xml
 
       - name: Azure Login using Service Principal
         uses: azure/login@v1
@@ -31,6 +30,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'customer-backend-api'  # your App Service name
+          app-name: 'customer-backend-api'
           slot-name: 'production'
-          package: ./CRUD-backend-Spring/target/*.jar
+          package: CRUD-backend-Spring/target/*.jar
