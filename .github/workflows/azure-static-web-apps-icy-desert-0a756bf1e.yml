@@ -1,9 +1,10 @@
-name: Deploy Angular Frontend to Azure Static Web App
+name: Build and Deploy Angular Frontend to Azure Static Web App
 
 on:
   push:
     branches:
-      - main  # or the actual branch you're using for frontend
+      - main  # or your actual frontend branch
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -18,9 +19,17 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ./CRUD-frontend-Spring/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('CRUD-frontend-Spring/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
-        working-directory: ./CRUD-frontend-Spring  # your Angular folder
+        working-directory: ./CRUD-frontend-Spring
 
       - name: Build Angular app
         run: npm run build -- --configuration production
