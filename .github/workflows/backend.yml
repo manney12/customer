@@ -3,26 +3,27 @@ name: Build and Deploy Spring Boot to Azure
 on:
   push:
     branches:
-      - feature/CustomerAppFirstCommit  # or your actual branch
+      - feature/CustomerAppFirstCommit  # replace if needed
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Spring Boot App
+      - name: Build Spring Boot app with Maven (skip tests)
         run: mvn clean package -DskipTests
-        working-directory: ./CRUD-backend-Spring  # 👈 update to your backend folder
+        working-directory: ./CRUD-backend-Spring
 
-      - name: Azure Login
+      - name: Azure Login using Service Principal
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -30,7 +31,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'customer-backend-api'  # 👈 your Azure App Service name
+          app-name: 'customer-backend-api'  # your App Service name
           slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ./CRUD-backend-Spring/target/*.jar  # 👈 path to the JAR
+          package: ./CRUD-backend-Spring/target/*.jar
