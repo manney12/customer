@@ -42,8 +42,8 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_DESERT_0A756BF1E }}
           # Token provided by GitHub for making repo-related API calls
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_678B43976FC24CB581C3841BAC6B615C }}
           app_location: ./CRUD-frontend-Spring
           output_location: dist/crud-client-creation
+
 
 
