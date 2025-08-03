@@ -46,8 +46,9 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'customer-backend-api'  # Your App Service name
-          slot-name: 'Production'
+          slot-name: 'dev'
           package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_678B43976FC24CB581C3841BAC6B615C }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+
 
