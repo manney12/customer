@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, NonNullableFormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
   selector: 'app-post-customer',
-  templateUrl: './post-customer.component.html'
+  templateUrl: './post-customer.component.html',
+  styleUrls: ['./post-customer.component.css']
 })
 export class PostCustomerComponent implements OnInit {
   postCustomerForm!: FormGroup<{
@@ -12,7 +15,10 @@ export class PostCustomerComponent implements OnInit {
     phone: FormControl<string>;
   }>;
 
-  constructor(private fb: NonNullableFormBuilder) {} // Use NonNullable for safety
+  constructor(
+    private fb: NonNullableFormBuilder,
+    private customerService: CustomerService,
+    private router: Router ) {}
 
   ngOnInit(): void {
     this.postCustomerForm = this.fb.group({
@@ -24,10 +30,17 @@ export class PostCustomerComponent implements OnInit {
 
   onSubmit(): void {
     if (this.postCustomerForm.valid) {
-      console.log('Form submitted:', this.postCustomerForm.value);
-      // You can send this.postCustomerForm.value to your API here
+      this.postCustomer();
     } else {
       console.warn('Form is invalid');
     }
+  }
+
+  postCustomer(): void {
+    console.log(this.postCustomerForm.value);
+    this.customerService.postCustomer(this.postCustomerForm.value).subscribe((res) => {
+      console.log('Customer created:', res);
+      this.router.navigateByUrl("/")
+    });
   }
 }

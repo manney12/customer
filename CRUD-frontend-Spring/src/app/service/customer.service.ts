@@ -12,8 +12,24 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  postCustomer(cusotmer: any): Observable<any>{
-    return this.http.post(BASIC_URL + "/api/customer", cusotmer);
-
+  postCustomer(customer: any): Observable<any>{
+    return this.http.post(BASIC_URL + "/api/customer", customer);
   }
+
+  getAllCustomers(): Observable <any>{
+    return this.http.get(BASIC_URL + "/api/customers"); 
+  }
+
+  getCustomerById(id:number): Observable <any>{
+    return this.http.get(BASIC_URL + "/api/customer/"+id); 
+  }
+
+  updateCustomers(id:number, customer: any): Observable <any>{
+    return this.http.put(BASIC_URL + "/api/customer/"+id, customer); 
+  }
+
+   deleteCustomer(id:number): Observable <any>{
+    return this.http.delete(BASIC_URL + "/api/customer/"+id); 
+  }
+
 }

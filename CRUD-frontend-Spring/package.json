@@ -2,7 +2,7 @@
   "name": "crud-client-creation",
   "version": "0.0.1",
   "scripts": {
-        "ng": "ng",
+    "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
