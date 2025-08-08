@@ -30,6 +30,6 @@ jobs:
         uses: azure/static-web-apps-deploy@v1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_DESERT_0A756BF1 }}
+          azure_static_web_apps_api_token: ${{secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_DESERT_0A756BF1}}
           app_location: ./CRUD-frontend-Spring
           output_location: dist/crud-client-creation
