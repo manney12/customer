@@ -1,0 +1,76 @@
+/* Table styling */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 14px;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eef5ff;
+}
+
+/* Buttons - clean & smooth */
+.btn-delete,
+.btn-update,
+.btn-new {
+    padding: 8px 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+/* Button colors */
+.btn-update {
+    background-color: #28a745;
+    margin-right: 8px; /* space between update & delete */
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn-new {
+    background-color: #007bff;
+    margin-top: 20px;
+}
+
+/* Hover effects */
+.btn-update:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.btn-delete:hover {
+    background-color: #b02a37;
+    transform: translateY(-1px);
+}
+
+.btn-new:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}

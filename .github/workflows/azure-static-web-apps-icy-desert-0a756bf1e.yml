@@ -1,0 +1,49 @@
+name: Build and Deploy Angular Frontend to Azure Static Web App
+
+on:
+  push:
+    branches:
+      - main  # or your actual frontend branch
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ./CRUD-frontend-Spring/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('CRUD-frontend-Spring/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./CRUD-frontend-Spring
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
+        working-directory: ./CRUD-frontend-Spring
+
+      - name: Deploy to Azure Static Web App
+        uses: azure/static-web-apps-deploy@v1
+        with:
+          # Secret from GitHub containing the Azure deployment token
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_DESERT_0A756BF1E }}
+          # Token provided by GitHub for making repo-related API calls
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          app_location: ./CRUD-frontend-Spring
+          output_location: dist/crud-client-creation
+
+
+
